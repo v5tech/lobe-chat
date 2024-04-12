@@ -1,6 +1,8 @@
 import resources from './default';
 
 export const locales = [
+  'ar',
+  'bg-BG',
   'de-DE',
   'en-US',
   'es-ES',
@@ -18,21 +20,18 @@ export const locales = [
 export type DefaultResources = typeof resources;
 export type Locales = (typeof locales)[number];
 
-export const normalizeLocale = (locale: string) => {
-  switch (locale) {
-    case 'zh-CN':
-    case 'zh': {
-      return 'zh-CN';
-    }
+export const normalizeLocale = (locale?: string): string => {
+  if (!locale) return 'en-US';
 
-    case 'en': {
-      return 'en-US';
-    }
+  if (locale.startsWith('ar')) return 'ar';
 
-    default: {
-      return locale;
+  for (const l of locales) {
+    if (l.startsWith(locale)) {
+      return l;
     }
   }
+
+  return 'en-US';
 };
 
 type LocaleOptions = {
@@ -42,16 +41,16 @@ type LocaleOptions = {
 
 export const localeOptions: LocaleOptions = [
   {
+    label: 'English',
+    value: 'en-US',
+  },
+  {
     label: '简体中文',
     value: 'zh-CN',
   },
   {
     label: '繁體中文',
     value: 'zh-TW',
-  },
-  {
-    label: 'English',
-    value: 'en-US',
   },
   {
     label: '日本語',
@@ -68,6 +67,10 @@ export const localeOptions: LocaleOptions = [
   {
     label: 'Español',
     value: 'es-ES',
+  },
+  {
+    label: 'العربية',
+    value: 'ar',
   },
   {
     label: 'Français',
@@ -100,6 +103,10 @@ export const localeOptions: LocaleOptions = [
   {
     label: 'Tiếng Việt',
     value: 'vi-VN',
+  },
+  {
+    label: 'Български',
+    value: 'bg-BG',
   },
 ] as LocaleOptions;
 

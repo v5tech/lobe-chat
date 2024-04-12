@@ -1,17 +1,24 @@
 'use client';
 
-import { memo } from 'react';
+import { useRouter } from 'next/navigation';
+import { memo, useEffect } from 'react';
 
-import PageTitle from '../features/PageTitle';
+import SessionHeader from './features/SessionHeader';
 import SessionList from './features/SessionList';
-import Layout from './layout.mobile';
 
 const ChatMobilePage = memo(() => {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.prefetch('/chat/mobile');
+    router.prefetch('/settings');
+  }, []);
+
   return (
-    <Layout>
-      <PageTitle />
+    <>
+      <SessionHeader />
       <SessionList />
-    </Layout>
+    </>
   );
 });
 

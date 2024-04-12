@@ -4,7 +4,8 @@ import { memo } from 'react';
 import LazyLoad from 'react-lazy-load';
 
 import { SESSION_CHAT_URL } from '@/const/url';
-import { useSessionHydrated, useSessionStore } from '@/store/session';
+import { useSessionStore } from '@/store/session';
+import { sessionSelectors } from '@/store/session/selectors';
 import { LobeAgentSession } from '@/types/session';
 
 import AddButton from './AddButton';
@@ -19,11 +20,12 @@ const useStyles = createStyles(
 
 interface SessionListProps {
   dataSource: LobeAgentSession[];
+  groupId?: string;
+  showAddButton?: boolean;
 }
-const SessionList = memo<SessionListProps>(({ dataSource }) => {
-  const [activeSession, switchSession] = useSessionStore((s) => [s.activeSession, s.switchSession]);
+const SessionList = memo<SessionListProps>(({ dataSource, groupId, showAddButton = true }) => {
+  const isInit = useSessionStore((s) => sessionSelectors.isSessionListInit(s));
   const { styles } = useStyles();
-  const isInit = useSessionHydrated();
 
   const { mobile } = useResponsive();
 
@@ -32,21 +34,13 @@ const SessionList = memo<SessionListProps>(({ dataSource }) => {
   ) : dataSource.length > 0 ? (
     dataSource.map(({ id }) => (
       <LazyLoad className={styles} key={id}>
-        <Link
-          aria-label={id}
-          href={SESSION_CHAT_URL(id, mobile)}
-          onClick={(e) => {
-            e.preventDefault();
-            if (mobile) switchSession(id);
-            else activeSession(id);
-          }}
-        >
+        <Link aria-label={id} href={SESSION_CHAT_URL(id, mobile)}>
           <SessionItem id={id} />
         </Link>
       </LazyLoad>
     ))
   ) : (
-    <AddButton />
+    showAddButton && <AddButton groupId={groupId} />
   );
 });
 

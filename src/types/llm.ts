@@ -1,20 +1,50 @@
-/**
- * LLM 模型
- */
-export enum LanguageModel {
+export interface ChatModelCard {
   /**
-   * GPT 3.5 Turbo
+   * only used in azure
    */
-  GPT3_5 = 'gpt-3.5-turbo',
-  GPT3_5_1106 = 'gpt-3.5-turbo-1106',
-  GPT3_5_16K = 'gpt-3.5-turbo-16k',
+  deploymentName?: string;
+  description?: string;
   /**
-   * GPT 4
+   * the name show for end user
    */
-  GPT4 = 'gpt-4',
-  GPT4_32K = 'gpt-4-32k',
-  GPT4_PREVIEW = 'gpt-4-1106-preview',
-  GPT4_VISION_PREVIEW = 'gpt-4-vision-preview',
+  displayName?: string;
+
+  /**
+   * whether model is enabled by default
+   */
+  enabled?: boolean;
+  /**
+   * whether model supports file upload
+   */
+  files?: boolean;
+  /**
+   * whether model supports function call
+   */
+  functionCall?: boolean;
+  id: string;
+  /**
+   * whether model is custom
+   */
+  isCustom?: boolean;
+  /**
+   * whether model is legacy (deprecated but not removed yet)
+   */
+  legacy?: boolean;
+  maxOutput?: number;
+  /**
+   * the context window
+   */
+  tokens?: number;
+  /**
+   *  whether model supports vision
+   */
+  vision?: boolean;
+}
+
+export interface ModelProviderCard {
+  chatModels: ChatModelCard[];
+  enabled?: boolean;
+  id: string;
 }
 
 // 语言模型的设置参数

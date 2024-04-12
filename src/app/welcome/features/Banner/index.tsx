@@ -3,25 +3,22 @@
 import { Icon } from '@lobehub/ui';
 import { Button } from 'antd';
 import { SendHorizonal } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Flexbox } from 'react-layout-kit';
 
 import DataImporter from '@/features/DataImporter';
-import { useSessionStore } from '@/store/session';
+import { useGlobalStore } from '@/store/global';
 
 import Hero from './Hero';
 import { useStyles } from './style';
 
 const Banner = memo<{ mobile?: boolean }>(({ mobile }) => {
   const { t } = useTranslation('welcome');
+  const router = useRouter();
   const { styles } = useStyles();
-  const [switchSession, switchBackToChat, router, isMobile] = useSessionStore((s) => [
-    s.switchSession,
-    s.switchBackToChat,
-    s.router,
-    s.isMobile,
-  ]);
+  const [switchBackToChat, isMobile] = useGlobalStore((s) => [s.switchBackToChat, s.isMobile]);
 
   return (
     <>
@@ -37,7 +34,7 @@ const Banner = memo<{ mobile?: boolean }>(({ mobile }) => {
       >
         <DataImporter
           onFinishImport={() => {
-            switchSession();
+            router.push('/chat');
           }}
         >
           <Button block={mobile} size={'large'}>
@@ -46,7 +43,7 @@ const Banner = memo<{ mobile?: boolean }>(({ mobile }) => {
         </DataImporter>
         <Button
           block={mobile}
-          onClick={() => (isMobile ? router?.push('/chat') : switchBackToChat())}
+          onClick={() => (isMobile ? router.push('/chat') : switchBackToChat())}
           size={'large'}
           type={'primary'}
         >

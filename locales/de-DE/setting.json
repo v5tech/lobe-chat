@@ -2,6 +2,14 @@
   "about": {
     "title": "Über"
   },
+  "agentTab": {
+    "chat": "Chat-Präferenz",
+    "meta": "Assistenteninformation",
+    "modal": "Modell-Einstellungen",
+    "plugin": "Plugin-Einstellungen",
+    "prompt": "Rollenkonfiguration",
+    "tts": "Sprachdienst"
+  },
   "analytics": {
     "telemetry": {
       "desc": "Durch das Senden von Telemetriedaten können Sie uns dabei helfen, die Gesamtnutzererfahrung von LobeChat zu verbessern",
@@ -27,15 +35,23 @@
     }
   },
   "header": {
+    "desc": "Präferenzen und Modellkonfigurationen.",
     "global": "Global Einstellungen",
     "session": "Sitzungseinstellungen",
-    "sessionWithName": "Sitzungseinstellungen · {{name}}"
+    "sessionDesc": "Rollenkonfiguration und Sitzungspräferenzen.",
+    "sessionWithName": "Sitzungseinstellungen · {{name}}",
+    "title": "Einstellungen"
   },
   "llm": {
+    "aesGcm": "Ihr Schlüssel und Ihre Proxy-Adresse werden mit dem <1>AES-GCM</1> Verschlüsselungsalgorithmus verschlüsselt.",
+    "apiKey": {
+      "desc": "Bitte geben Sie Ihren {{name}} API-Schlüssel ein",
+      "placeholder": "{{name}} API-Schlüssel",
+      "title": "API-Schlüssel"
+    },
     "checker": {
       "button": "Überprüfen",
       "desc": "Überprüfen Sie, ob der API-Schlüssel und die Proxy-Adresse korrekt eingegeben wurden",
-      "ollamaDesc": "Testen Sie, ob die Proxy-Adresse korrekt eingegeben wurde",
       "pass": "Überprüfung bestanden",
       "title": "Konnektivitätsprüfung"
     },
@@ -68,7 +84,8 @@
         },
         "modalTitle": "Benutzerdefinierte Modellkonfiguration",
         "tokens": {
-          "title": "Maximale Token-Anzahl"
+          "title": "Maximale Token-Anzahl",
+          "unlimited": "unbegrenzt"
         },
         "vision": {
           "extra": "Diese Konfiguration aktiviert nur die Bild-Upload-Konfiguration in LobeChat. Die Unterstützung der Erkennung hängt vollständig von dem Modell selbst ab. Bitte testen Sie die Verfügbarkeit der visuellen Erkennungsfähigkeiten des Modells selbst.",
@@ -86,21 +103,18 @@
       "latestTime": "Letzte Aktualisierung: {{time}}",
       "noLatestTime": "Liste noch nicht abgerufen"
     },
+    "helpDoc": "Konfigurationsanleitung",
     "modelList": {
       "desc": "Wählen Sie die Modelle aus, die in der Sitzung angezeigt werden sollen. Die ausgewählten Modelle werden in der Modellliste angezeigt.",
       "placeholder": "Wählen Sie ein Modell aus der Liste aus",
       "title": "Modellliste",
       "total": "Insgesamt {{count}} Modelle verfügbar"
     },
-    "waitingForMore": "Weitere Modelle werden <1>geplant</1>, bitte freuen Sie sich auf weitere Updates ✨"
-  },
-  "ollama": {
-    "download": {
-      "desc": "Ollama lädt dieses Modell herunter. Bitte schließen Sie diese Seite nicht. Der Download wird an der abgebrochenen Stelle fortgesetzt, wenn Sie ihn erneut starten.",
-      "remainingTime": "Verbleibende Zeit",
-      "speed": "Download-Geschwindigkeit",
-      "title": "Modell {{model}} wird heruntergeladen"
-    }
+    "proxyUrl": {
+      "desc": "Außer der Standardadresse muss http(s):// enthalten sein",
+      "title": "API-Proxy-Adresse"
+    },
+    "waitingForMore": "Weitere Modelle werden <1>geplant</1>, bitte freuen Sie sich auf weitere Updates"
   },
   "plugin": {
     "addTooltip": "Benutzerdefiniertes Plugin",
@@ -167,6 +181,7 @@
     "enableHistoryCount": {
       "alias": "Unbegrenzt",
       "limited": "Enthält nur {{number}} Gesprächsnachrichten",
+      "setlimited": "Setzen Sie die begrenzte Anzahl von Nachrichten",
       "title": "Historiennachrichten begrenzen",
       "unlimited": "Unbegrenzte Historiennachrichten"
     },
@@ -352,6 +367,24 @@
       "title": "WebRTC-Synchronisierung"
     }
   },
+  "systemAgent": {
+    "agentMeta": {
+      "label": "Assistentenmetadaten-Generierungsmodell",
+      "modelDesc": "Das Modell, das zur Generierung von Assistentennamen, -beschreibungen, -avatars und -tags verwendet wird",
+      "title": "Automatische Generierung von Assistenteninformationen"
+    },
+    "title": "Systemassistent",
+    "topic": {
+      "label": "Themenbenennungsmodell",
+      "modelDesc": "Das Modell, das für die automatische Umbenennung von Themen verwendet wird",
+      "title": "Automatische Themenbenennung"
+    },
+    "translation": {
+      "label": "Übersetzungsmodell",
+      "modelDesc": "Das für die Übersetzung verwendete Modell",
+      "title": "Einstellungen für Übersetzungsassistent"
+    }
+  },
   "tab": {
     "about": "Über",
     "agent": "Standard-Assistent",
@@ -359,6 +392,7 @@
     "experiment": "Experiment",
     "llm": "Sprachmodell",
     "sync": "Cloud-Synchronisierung",
+    "system-agent": "Systemassistent",
     "tts": "Sprachdienste"
   },
   "tools": {

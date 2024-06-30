@@ -1,12 +1,21 @@
 import { PluginRequestPayload } from '@lobehub/chat-plugin-sdk';
+import { Skeleton } from 'antd';
+import dynamic from 'next/dynamic';
 import { memo } from 'react';
 
 import { LobeToolRenderType } from '@/types/tool';
 
-import BuiltinType from '././BuiltinType';
 import DefaultType from './DefaultType';
 import Markdown from './MarkdownType';
-import Standalone from './StandaloneType';
+
+const loading = () => (
+  <Skeleton.Node active style={{ width: '100%' }}>
+    {' '}
+  </Skeleton.Node>
+);
+
+const Standalone = dynamic(() => import('./StandaloneType'), { loading });
+const BuiltinType = dynamic(() => import('./BuiltinType'), { loading });
 
 export interface PluginRenderProps {
   content: string;
@@ -14,18 +23,27 @@ export interface PluginRenderProps {
   identifier?: string;
   loading?: boolean;
   payload?: PluginRequestPayload;
+  pluginState?: any;
   type?: LobeToolRenderType;
 }
 
 const PluginRender = memo<PluginRenderProps>(
-  ({ content, id, payload, identifier, type, loading }) => {
+  ({ content, id, payload, pluginState, identifier, type, loading }) => {
     switch (type) {
       case 'standalone': {
         return <Standalone id={id} name={identifier} payload={payload} />;
       }
 
       case 'builtin': {
-        return <BuiltinType content={content} id={id} identifier={identifier} loading={loading} />;
+        return (
+          <BuiltinType
+            content={content}
+            id={id}
+            identifier={identifier}
+            loading={loading}
+            pluginState={pluginState}
+          />
+        );
       }
 
       case 'markdown': {

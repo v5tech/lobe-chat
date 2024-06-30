@@ -1,27 +1,54 @@
 'use client';
 
-import { PropsWithChildren, memo } from 'react';
-import { Center, Flexbox } from 'react-layout-kit';
+import { Tag } from 'antd';
+import { useResponsive } from 'antd-style';
+import { memo, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Flexbox } from 'react-layout-kit';
 
-import SafeSpacing from '@/components/SafeSpacing';
-import ClientResponsiveLayout from '@/components/client/ClientResponsiveLayout';
+import SettingContainer from '@/features/Setting//SettingContainer';
+import Footer from '@/features/Setting/Footer';
+import { useActiveSettingsKey } from '@/hooks/useActiveSettingsKey';
+import { SettingsTabs } from '@/store/global/initialState';
 
+import { LayoutProps } from '../type';
 import Header from './Header';
 import SideBar from './SideBar';
 
-const Desktop = memo<PropsWithChildren>(({ children }) => (
-  <>
-    <SideBar />
-    <Flexbox flex={1} height={'100%'} style={{ position: 'relative' }}>
-      <Header />
-      <Flexbox align={'center'} flex={1} padding={24} style={{ overflowY: 'scroll' }}>
-        <SafeSpacing />
-        <Center gap={16} width={'100%'}>
-          {children}
-        </Center>
-      </Flexbox>
-    </Flexbox>
-  </>
-));
+const Layout = memo<LayoutProps>(({ children, category }) => {
+  const ref = useRef<any>(null);
+  const { md = true } = useResponsive();
+  const { t } = useTranslation('setting');
+  const activeKey = useActiveSettingsKey();
 
-export default ClientResponsiveLayout({ Desktop, Mobile: () => import('../Mobile') });
+  return (
+    <Flexbox
+      height={'100%'}
+      horizontal={md}
+      ref={ref}
+      style={{ position: 'relative' }}
+      width={'100%'}
+    >
+      {md ? (
+        <SideBar>{category}</SideBar>
+      ) : (
+        <Header
+          getContainer={() => ref.current}
+          title={
+            <>
+              {t(`tab.${activeKey}`)}
+              {activeKey === SettingsTabs.Sync && <Tag color={'gold'}>{t('tab.experiment')}</Tag>}
+            </>
+          }
+        >
+          {category}
+        </Header>
+      )}
+      <SettingContainer addonAfter={<Footer />}>{children}</SettingContainer>
+    </Flexbox>
+  );
+});
+
+Layout.displayName = 'DesktopSettingsLayout';
+
+export default Layout;
